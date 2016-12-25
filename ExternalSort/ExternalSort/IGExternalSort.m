@@ -25,10 +25,11 @@
 - (void)sortInputFilePath:(const char *)inputFilePath outputFilePath:(const char *)outputFilePath availableMemory:(int)availableMemory {
     self.inputFileHandler = [[IGFileHandler alloc] initForReadingWithFilePath:inputFilePath];
     self.outputFileHandler = [[IGFileHandler alloc] initForWritingWithFilePath:outputFilePath];
-    self.blockCount = [self calculateBlockCount:[self.inputFile calculateFileLength] availableMemory:availableMemory];
+    self.blockCount = [self calculateBlockCount:[self.inputFileHandler calculateFileLength] availableMemory:availableMemory];
     self.availableMemory = availableMemory;
     
     [self generateTempFiles];
+    [self blockSort];
 }
 
 - (int)calculateBlockCount:(unsigned long)fileLength availableMemory:(int)availableMemory {
@@ -54,6 +55,27 @@
         IGFileHandler *fileHandler = [[IGFileHandler alloc] initForWritingWithFilePath:filePath];
         [self.tmpFiles addObject:fileHandler];
     }
+}
+
+-(void)blockSort {
+    for (int i = 0; i <self.blockCount; i++) {
+        double *buffer = (double *)malloc(self.availableMemory);
+        
+        size_t bytesRead = fread(buffer, 1, self.availableMemory, self.inputFileHandler.file);
+        qsort(buffer, bytesRead / sizeof(double), sizeof(double), compareFunction);
+        IGFileHandler *tmpFileHandler = self.tmpFiles[i];
+        fwrite(buffer, bytesRead, 1, tmpFileHandler.file);
+        
+        free(buffer);
+    }
+    
+    for (IGFileHandler *tmpFile in self.tmpFiles) {
+        fseek(tmpFile.file, SEEK_SET, 0);
+    }
+}
+
+int compareFunction (const void * a, const void * b) {
+    return (*(double*)a - *(double*)b);
 }
 
 @end
