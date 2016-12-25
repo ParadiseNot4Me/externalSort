@@ -10,6 +10,8 @@
 		C88EB40B1E104F160092A755 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB40A1E104F160092A755 /* main.m */; };
 		C88EB4181E104FA80092A755 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB4171E104FA80092A755 /* main.m */; };
 		C88EB41F1E104FFE0092A755 /* IGFileGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB41E1E104FFE0092A755 /* IGFileGenerator.m */; };
+		C88EB4231E1055BD0092A755 /* IGExternalSort.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB4221E1055BD0092A755 /* IGExternalSort.m */; };
+		C88EB4271E1056BA0092A755 /* IGFileHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB4261E1056BA0092A755 /* IGFileHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +42,10 @@
 		C88EB4171E104FA80092A755 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C88EB41D1E104FFE0092A755 /* IGFileGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGFileGenerator.h; path = FileGenerator/IGFileGenerator.h; sourceTree = "<group>"; };
 		C88EB41E1E104FFE0092A755 /* IGFileGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGFileGenerator.m; path = FileGenerator/IGFileGenerator.m; sourceTree = "<group>"; };
+		C88EB4211E1055BD0092A755 /* IGExternalSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGExternalSort.h; path = ExternalSort/IGExternalSort.h; sourceTree = "<group>"; };
+		C88EB4221E1055BD0092A755 /* IGExternalSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGExternalSort.m; path = ExternalSort/IGExternalSort.m; sourceTree = "<group>"; };
+		C88EB4251E1056BA0092A755 /* IGFileHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGFileHandler.h; path = FileHandler/IGFileHandler.h; sourceTree = "<group>"; };
+		C88EB4261E1056BA0092A755 /* IGFileHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGFileHandler.m; path = FileHandler/IGFileHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,8 @@
 		C88EB4091E104F160092A755 /* ExternalSort */ = {
 			isa = PBXGroup;
 			children = (
+				C88EB4241E1056790092A755 /* FileHandler */,
+				C88EB4201E1055A60092A755 /* ExternalSort */,
 				C88EB40A1E104F160092A755 /* main.m */,
 			);
 			path = ExternalSort;
@@ -102,6 +110,24 @@
 				C88EB41E1E104FFE0092A755 /* IGFileGenerator.m */,
 			);
 			name = FileGenerator;
+			sourceTree = "<group>";
+		};
+		C88EB4201E1055A60092A755 /* ExternalSort */ = {
+			isa = PBXGroup;
+			children = (
+				C88EB4211E1055BD0092A755 /* IGExternalSort.h */,
+				C88EB4221E1055BD0092A755 /* IGExternalSort.m */,
+			);
+			name = ExternalSort;
+			sourceTree = "<group>";
+		};
+		C88EB4241E1056790092A755 /* FileHandler */ = {
+			isa = PBXGroup;
+			children = (
+				C88EB4251E1056BA0092A755 /* IGFileHandler.h */,
+				C88EB4261E1056BA0092A755 /* IGFileHandler.m */,
+			);
+			name = FileHandler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,6 +211,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C88EB4271E1056BA0092A755 /* IGFileHandler.m in Sources */,
+				C88EB4231E1055BD0092A755 /* IGExternalSort.m in Sources */,
 				C88EB40B1E104F160092A755 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
