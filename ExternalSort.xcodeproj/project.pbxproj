@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C88EB40B1E104F160092A755 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB40A1E104F160092A755 /* main.m */; };
 		C88EB4181E104FA80092A755 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB4171E104FA80092A755 /* main.m */; };
+		C88EB41F1E104FFE0092A755 /* IGFileGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C88EB41E1E104FFE0092A755 /* IGFileGenerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,8 @@
 		C88EB40A1E104F160092A755 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C88EB4151E104FA80092A755 /* FileGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FileGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88EB4171E104FA80092A755 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C88EB41D1E104FFE0092A755 /* IGFileGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGFileGenerator.h; path = FileGenerator/IGFileGenerator.h; sourceTree = "<group>"; };
+		C88EB41E1E104FFE0092A755 /* IGFileGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGFileGenerator.m; path = FileGenerator/IGFileGenerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +89,19 @@
 		C88EB4161E104FA80092A755 /* FileGenerator */ = {
 			isa = PBXGroup;
 			children = (
+				C88EB41C1E104FD70092A755 /* FileGenerator */,
 				C88EB4171E104FA80092A755 /* main.m */,
 			);
 			path = FileGenerator;
+			sourceTree = "<group>";
+		};
+		C88EB41C1E104FD70092A755 /* FileGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				C88EB41D1E104FFE0092A755 /* IGFileGenerator.h */,
+				C88EB41E1E104FFE0092A755 /* IGFileGenerator.m */,
+			);
+			name = FileGenerator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C88EB4181E104FA80092A755 /* main.m in Sources */,
+				C88EB41F1E104FFE0092A755 /* IGFileGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
