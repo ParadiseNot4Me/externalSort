@@ -83,10 +83,10 @@
 
 @implementation IGPriorityQueueNode
 
-- (id)initWithFile:(IGFileHandle *)file priority:(double)priority {
+- (id)initWithFile:(IGFileHandler *)fileHandler priority:(double)priority {
     self = [super init];
     if (self != nil) {
-        self.file = file;
+        self.fileHandler = fileHandler;
         self.priority = priority;
     }
     return self;

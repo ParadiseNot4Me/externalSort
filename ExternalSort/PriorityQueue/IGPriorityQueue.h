@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class IGFileHandle;
+@class IGFileHandler;
 
 @interface IGPriorityQueueNode : NSObject
 
 @property (nonatomic, assign) double priority;
-@property (nonatomic, strong) IGFileHandle *file;
+@property (nonatomic, strong) IGFileHandler *fileHandler;
 
-- (id)initWithFile:(IGFileHandle *)file priority:(double)priority;
+- (id)initWithFile:(IGFileHandler *)file priority:(double)priority;
 
 @end
 

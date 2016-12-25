@@ -8,6 +8,7 @@
 
 #import "IGExternalSort.h"
 #import "IGFileHandler.h"
+#import "IGPriorityQueue.h"
 
 @interface IGExternalSort ()
 
@@ -30,6 +31,7 @@
     
     [self generateTempFiles];
     [self blockSort];
+    [self mergeSort];
 }
 
 - (int)calculateBlockCount:(unsigned long)fileLength availableMemory:(int)availableMemory {
@@ -71,6 +73,34 @@
     
     for (IGFileHandler *tmpFile in self.tmpFiles) {
         fseek(tmpFile.file, SEEK_SET, 0);
+    }
+}
+
+-(void)mergeSort {
+    IGPriorityQueue *priorityQueue = [IGPriorityQueue new];
+    
+    for (IGFileHandler *tmpFile in self.tmpFiles) {
+        double priority;
+        fread(&priority,1, sizeof(double), tmpFile.file);
+        IGPriorityQueueNode *priorityQueueNode = [[IGPriorityQueueNode alloc] initWithFile:tmpFile priority:priority];
+        [priorityQueue enqueueNode:priorityQueueNode];
+    }
+    
+    while (priorityQueue.size > 0) {
+        IGPriorityQueueNode *priorityQueueNode = [priorityQueue dequeueNode];
+        
+        double priority = priorityQueueNode.priority;
+        fwrite(&priority, sizeof(double), 1, self.outputFileHandler.file);
+        
+        size_t byte = fread(&priority, 1, sizeof(double), priorityQueueNode.fileHandler.file);
+        
+        if (byte != 0) {
+            priorityQueueNode.priority = priority;
+            
+            [priorityQueue enqueueNode:priorityQueueNode];
+        } else {
+            fclose(priorityQueueNode.fileHandler.file);
+        }
     }
 }
 
