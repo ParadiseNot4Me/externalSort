@@ -99,7 +99,8 @@
             
             [priorityQueue enqueueNode:priorityQueueNode];
         } else {
-            fclose(priorityQueueNode.fileHandler.file);
+            [priorityQueueNode.fileHandler closeFile];
+            [priorityQueueNode.fileHandler removeFile];
         }
     }
 }

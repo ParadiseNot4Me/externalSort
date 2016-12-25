@@ -19,4 +19,7 @@
 
 - (FILE *)file;
 
+-(void)closeFile;
+-(void)removeFile;
+
 @end

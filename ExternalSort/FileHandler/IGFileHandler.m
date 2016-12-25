@@ -51,4 +51,13 @@
     fseek(file, 0, SEEK_SET);
     return fileLength;
 }
+
+-(void)closeFile {
+    fclose(file);
+}
+
+-(void)removeFile {
+    remove(name);
+}
+
 @end
