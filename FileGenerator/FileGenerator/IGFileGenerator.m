@@ -25,6 +25,24 @@
     fclose(file);
 }
 
++ (void)generateTextFileAtPath:(const char *)filePath withSize:(unsigned long)totalSize {
+    FILE *file = fopen(filePath, "w");
+    
+    unsigned long fileSize = 0;
+    
+    while (fileSize < totalSize) {
+        double number = [self generateRandomDouble];
+        char *buffer = malloc(sizeof(double) + strlen("\n"));
+        sprintf(buffer, "%f\n",number);
+        fprintf(file, "%s", buffer);
+        
+        fileSize += strlen(buffer);
+        free(buffer);
+    }
+    
+    fclose(file);
+}
+
 + (double)generateRandomDouble {
     return (((double) rand() / (RAND_MAX - 1)) * RAND_MAX);
 }

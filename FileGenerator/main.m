@@ -10,11 +10,16 @@
 #import "IGFileGenerator.h"
 
 int main(int argc, const char * argv[]) {
-    if (argc < 2) {
+    if (argc < 4) {
         printf("Use arguments. help - readme.md\n");
     }
     
-    [IGFileGenerator generateBinaryFileAtPath:argv[2] withSize:atoi(argv[3])*1000*1000];
+    if(!strcmp(argv[1], "-b")) {
+        [IGFileGenerator generateBinaryFileAtPath:argv[2] withSize:atoi(argv[3])*1000*1000];
+    }
+    if(!strcmp(argv[1], "-t")) {
+        [IGFileGenerator generateTextFileAtPath:argv[2] withSize:atoi(argv[3])*1000*1000];
+    }
     
     return 0;
 }
