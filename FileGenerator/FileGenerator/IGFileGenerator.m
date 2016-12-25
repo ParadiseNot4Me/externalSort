@@ -32,7 +32,7 @@
     
     while (fileSize < totalSize) {
         double number = [self generateRandomDouble];
-        char *buffer = malloc(sizeof(double) + strlen("\n"));
+        char *buffer = malloc((sizeof(double) + strlen("\n")));
         sprintf(buffer, "%f\n",number);
         fprintf(file, "%s", buffer);
         

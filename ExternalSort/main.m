@@ -23,8 +23,7 @@ int main(int argc, const char * argv[]) {
         printf("input file: %s\n", argv[2]);
         printf("output file: %s\n", argv[3]);
         printf("available memory: %d\n", argv[4]);
-        printf("%lf\n", timeSpent);
-        
+        printf("time: %lf\n", timeSpent);
     }
     return 0;
 }
