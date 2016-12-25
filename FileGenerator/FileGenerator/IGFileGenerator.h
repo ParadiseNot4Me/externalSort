@@ -10,4 +10,6 @@
 
 @interface IGFileGenerator : NSObject
 
++ (void)generateBinaryFileAtPath:(const char *)filePath withSize:(unsigned long)totalSize;
+
 @end
