@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "IGFileGenerator.h"
+#include <time.h> 
 
 int main(int argc, const char * argv[]) {
     if (argc < 4) {
         printf("Use arguments. help - readme.md\n");
     }
+    
+    srand (time(NULL));
     
     clock_t begin, end;
     begin = clock();

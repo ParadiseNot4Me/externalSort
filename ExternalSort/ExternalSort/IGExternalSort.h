@@ -10,6 +10,6 @@
 
 @interface IGExternalSort : NSObject
 
-- (void)sortInputFilePath:(const char *)inputFilePath outputFilePath:(const char *)outputFilePath availableMemory:(int)availableMemory;
+- (void)sortInputFilePath:(const char *)inputFilePath outputFilePath:(const char *)outputFilePath availableMemory:(int)availableMemory binary:(BOOL)binary;
 
 @end

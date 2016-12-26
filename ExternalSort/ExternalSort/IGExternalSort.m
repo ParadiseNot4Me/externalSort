@@ -17,17 +17,19 @@
 
 @property (nonatomic, assign) int blockCount;
 @property (nonatomic, assign) int availableMemory;
+@property (nonatomic, assign) BOOL binary;
 @property (nonatomic, strong) NSMutableArray *tmpFiles;
 
 @end
 
 @implementation IGExternalSort
 
-- (void)sortInputFilePath:(const char *)inputFilePath outputFilePath:(const char *)outputFilePath availableMemory:(int)availableMemory {
+- (void)sortInputFilePath:(const char *)inputFilePath outputFilePath:(const char *)outputFilePath availableMemory:(int)availableMemory binary:(BOOL)binary {
     self.inputFileHandler = [[IGFileHandler alloc] initForReadingWithFilePath:inputFilePath];
     self.outputFileHandler = [[IGFileHandler alloc] initForWritingWithFilePath:outputFilePath];
     self.blockCount = [self calculateBlockCount:[self.inputFileHandler calculateFileLength] availableMemory:availableMemory];
     self.availableMemory = availableMemory;
+    self.binary = binary;
     
     [self generateTempFiles];
     [self blockSort];
@@ -62,11 +64,32 @@
 -(void)blockSort {
     for (int i = 0; i <self.blockCount; i++) {
         double *buffer = (double *)malloc(self.availableMemory);
-        
-        size_t bytesRead = fread(buffer, 1, self.availableMemory, self.inputFileHandler.file);
-        qsort(buffer, bytesRead / sizeof(double), sizeof(double), compareFunction);
         IGFileHandler *tmpFileHandler = self.tmpFiles[i];
-        fwrite(buffer, bytesRead, 1, tmpFileHandler.file);
+        
+        if (self.binary) {
+            size_t bytesRead = fread(buffer, 1, self.availableMemory, self.inputFileHandler.file);
+            qsort(buffer, bytesRead / sizeof(double), sizeof(double), compareFunction);
+            fwrite(buffer, bytesRead, 1, tmpFileHandler.file);
+        } else {
+            unsigned long fileSize = 0;
+            int count = 0;
+            double number = 0.0;
+            while (fileSize < self.availableMemory && (fscanf(self.inputFileHandler.file,"%lf",&number) != EOF)) {
+                buffer[count] = number;
+                int bytesRead = snprintf(NULL, 0, "%lf\n",number);
+                fileSize += bytesRead;
+                count++;
+            }
+            
+            qsort(buffer, count, sizeof(double), compareFunction);
+            
+            for (int k = 0; k < count; k++) {
+                char *numberBuffer = malloc((sizeof(char) * snprintf(NULL, 0, "%lf\n",buffer[k])) + 1);
+                sprintf(numberBuffer, "%lf\n",buffer[k]);
+                fprintf(tmpFileHandler.file, "%s", numberBuffer);
+                free(numberBuffer);
+            }
+        }
         
         free(buffer);
     }
@@ -81,7 +104,13 @@
     
     for (IGFileHandler *tmpFile in self.tmpFiles) {
         double priority;
-        fread(&priority,1, sizeof(double), tmpFile.file);
+        
+        if (self.binary) {
+            fread(&priority,1, sizeof(double), tmpFile.file);
+        } else {
+            fscanf(tmpFile.file, "%lf",&priority);
+        }
+        
         IGPriorityQueueNode *priorityQueueNode = [[IGPriorityQueueNode alloc] initWithFile:tmpFile priority:priority];
         [priorityQueue enqueueNode:priorityQueueNode];
     }
@@ -90,11 +119,29 @@
         IGPriorityQueueNode *priorityQueueNode = [priorityQueue dequeueNode];
         
         double priority = priorityQueueNode.priority;
-        fwrite(&priority, sizeof(double), 1, self.outputFileHandler.file);
         
-        size_t byte = fread(&priority, 1, sizeof(double), priorityQueueNode.fileHandler.file);
+        if (self.binary) {
+            fwrite(&priority, sizeof(double), 1, self.outputFileHandler.file);
+        } else {
+            char *numberBuffer = malloc((sizeof(char) * snprintf(NULL, 0, "%lf\n", priority)) + 1);
+            sprintf(numberBuffer, "%lf\n", priority);
+            fprintf(self.outputFileHandler.file, "%s", numberBuffer);
+            free(numberBuffer);
+            
+        }
+
+        BOOL isFileEnd = NO;
         
-        if (byte != 0) {
+        if (self.binary) {
+            size_t byte = fread(&priority, 1, sizeof(double), priorityQueueNode.fileHandler.file);
+            if (byte == 0) isFileEnd = YES;
+        } else {
+            if ((fscanf(priorityQueueNode.fileHandler.file, "%lf",&priority) == EOF)) {
+                isFileEnd = YES;
+            }
+        }
+
+        if (!isFileEnd) {
             priorityQueueNode.priority = priority;
             
             [priorityQueue enqueueNode:priorityQueueNode];

@@ -32,8 +32,8 @@
     
     while (fileSize < totalSize) {
         double number = [self generateRandomDouble];
-        char *buffer = malloc((sizeof(double) + strlen("\n")));
-        sprintf(buffer, "%f\n",number);
+        char *buffer = malloc((sizeof(char) * snprintf(NULL, 0, "%lf\n",number)) + 1);
+        sprintf(buffer, "%lf\n",number);
         fprintf(file, "%s", buffer);
         
         fileSize += strlen(buffer);
@@ -44,7 +44,7 @@
 }
 
 + (double)generateRandomDouble {
-    return (((double) rand() / (RAND_MAX - 1)) * RAND_MAX);
+    return (((double)rand()/(double)RAND_MAX) + (double)rand());
 }
 
 @end
